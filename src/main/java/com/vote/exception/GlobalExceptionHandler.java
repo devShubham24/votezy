@@ -54,7 +54,11 @@ public class GlobalExceptionHandler {
 		ErrorResponse err=new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR.value(),ex.getMessage());
 		return new ResponseEntity<>(err,HttpStatus.INTERNAL_SERVER_ERROR);
 	}
-	
+	@ExceptionHandler(ResultAlreadyDeclare.class)
+	public ResponseEntity<ErrorResponse>handeladdVoters(ResultAlreadyDeclare ex){
+		ErrorResponse err=new ErrorResponse(HttpStatus.FORBIDDEN.value(),ex.getMessage());
+		return new ResponseEntity<>(err,HttpStatus.FORBIDDEN);
+	}
 	
 	
 	

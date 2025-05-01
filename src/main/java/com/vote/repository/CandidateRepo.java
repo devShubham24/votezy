@@ -7,4 +7,6 @@ import com.vote.entity.Candidate;
 
 public interface CandidateRepo extends JpaRepository<Candidate, Long>{
 	List<Candidate> findAllByOrderByVoteCountDesc();
+	boolean existsByParty(String name);
+	
 }

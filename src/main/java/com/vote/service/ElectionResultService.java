@@ -62,7 +62,7 @@ public class ElectionResultService {
 		}
 
 	    public List<ElectionResult> getAllResults(){
-	    	return electionResultRepo.findAll();
+	    	return electionResultRepo.findAll();                
 	    }
 	}
 

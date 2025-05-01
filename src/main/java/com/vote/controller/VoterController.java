@@ -30,7 +30,6 @@ public class VoterController {
 	public VoterController(VoterService voterService) {
 		this.voterService = voterService;
 	}
-	
 	@PostMapping("/register")
 	public ResponseEntity<Voter> registerVoter(@RequestBody @Valid Voter voter){
 		Voter savedVoter=voterService.registerVoter(voter);

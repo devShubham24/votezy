@@ -10,7 +10,9 @@ import com.vote.entity.Vote;
 import com.vote.entity.Voter;
 import com.vote.exception.DuplicateResourceException;
 import com.vote.exception.ResourceNotFoundException;
+import com.vote.exception.ResultAlreadyDeclare;
 import com.vote.repository.CandidateRepo;
+import com.vote.repository.ElectionResultRepo;
 import com.vote.repository.VoterRepo;
 
 import jakarta.transaction.Transactional;
@@ -20,17 +22,23 @@ import jakarta.transaction.Transactional;
 public class VoterService {
 	private VoterRepo voterRepo;
 	private CandidateRepo candiRepo;
+	private ElectionResultRepo electionResultRepo;
 
 	@Autowired	
-	public VoterService(VoterRepo voteRepo, CandidateRepo candiRepo) {
+	public VoterService(VoterRepo voteRepo, CandidateRepo candiRepo,ElectionResultRepo  electionResultRepo) {
 		this.voterRepo = voteRepo;
 		this.candiRepo = candiRepo;
+		this. electionResultRepo= electionResultRepo;
 	}
+	     
 	
 	//AddVoter
 	public Voter registerVoter(Voter voter) {
 		if(voterRepo.existsByEmail(voter.getEmail())) {
 			throw new DuplicateResourceException("Voter with this email id : "+voter.getEmail()+" is already exist");
+		}
+		if(electionResultRepo.count()==1) {
+			throw new ResultAlreadyDeclare("Election result already declared. You cannot add a new voter");
 		}
 		return voterRepo.save(voter);
 	}

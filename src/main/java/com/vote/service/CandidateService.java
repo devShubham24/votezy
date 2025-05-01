@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.vote.entity.Candidate;
 import com.vote.entity.Vote;
+import com.vote.exception.DuplicateResourceException;
 import com.vote.exception.ResourceNotFoundException;
 import com.vote.repository.CandidateRepo;
 
@@ -21,9 +22,12 @@ public class CandidateService {
 	
 	//Add Candidate
 	public Candidate addCandidate(Candidate candi) {
+		if(candiRepo.existsByParty(candi.getParty())) {
+			throw new DuplicateResourceException("Candidate with this Party  : "+ candi.getParty()+" is already exist");
+		}else {
 		return candiRepo.save(candi);
 	}
-	
+	}
 	//Get Candidate
 	public List<Candidate>getAllCandi(){
 		return candiRepo.findAll();
